@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: web
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./site:/usr/share/nginx/html
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/html
+    depends_on:
+      - certbot
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/html
+    entrypoint: >
+      sh -c "trap exit TERM; while :; do sleep 1 & wait $${!}; done"
