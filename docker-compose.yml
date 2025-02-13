@@ -21,7 +21,9 @@ services:
     entrypoint: >
       sh -c "trap exit TERM; while :; do sleep 1 & wait $${!}; done"
   frontend:
-    build: /home/ubuntu/uno-react
+    build:
+      context: /home/ubuntu/uno-react # Path to the React project directory
+      dockerfile: Dockerfile # Dockerfile inside uno-react directory
     container_name: frontend
     restart: always
     ports:
