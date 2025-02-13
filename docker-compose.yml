@@ -52,3 +52,27 @@ services:
       - ./certbot/conf:/etc/letsencrypt
     entrypoint: >
       sh -c "trap exit TERM; while :; do sleep 1 & wait $${!}; done"
+  frontend:
+    build: /home/ubuntu/uno-react
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - uno-network
+  uno_server:
+    build:
+      context: /home/ubuntu/uno
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - uno-network
+    environment:
+      - PORT=8000
+    restart: always
+    container_name: uno_server
+
+networks:
+  uno-network:
+    driver: bridge
