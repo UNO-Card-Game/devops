@@ -45,8 +45,7 @@ services:
       - PORT=8000
     restart: always
     container_name: uno_server
-  volumes:
-    website:
+
 networks:
   uno-network:
     driver: bridge
