@@ -26,8 +26,6 @@ services:
       dockerfile: Dockerfile # Dockerfile inside uno-react directory
     container_name: frontend
     restart: always
-    ports:
-      - "3000:80" #map to port 80
     environment:
     - NODE_ENV=production
     networks:
