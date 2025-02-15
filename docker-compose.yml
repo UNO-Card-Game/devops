@@ -6,13 +6,14 @@ services:
       - ./site:/usr/share/nginx/html
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/html
-      - app:/usr/share/nginx/html/app
+     
     ports:
       - "80:80" # HTTP
       - "443:443" # HTTPS
     restart: always
     depends_on:
       - certbot
+      - frontend
   certbot:
     image: certbot/certbot
     container_name: certbot
@@ -28,9 +29,7 @@ services:
     container_name: frontend
     restart: always
     environment:
-    - NODE_ENV=production
-    volumes:
-    - app:/app/dist/ 
+    - NODE_ENV=production 
     networks:
       - uno-network
   uno_server:
